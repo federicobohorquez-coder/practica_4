@@ -36,7 +36,6 @@ bool Red::agregarEnlace(const std::string& origen, const std::string& destino, i
         return false; // Ambos nodos deben existir en la red
     }
 
-    // Enlace simétrico/bidireccional
     enrutadores[origen].agregarOActualizarVecino(destino, costo);
     enrutadores[destino].agregarOActualizarVecino(origen, costo);
     return true;
@@ -53,7 +52,6 @@ bool Red::eliminarEnlace(const std::string& origen, const std::string& destino) 
 }
 
 void Red::imprimirRed() const {
-    std::cout << "\n================ TOPOLOGIA DE LA RED ================\n";
     if (enrutadores.empty()) {
         std::cout << "La red esta vacia.\n";
     } else {
@@ -61,7 +59,6 @@ void Red::imprimirRed() const {
             par.second.imprimirVecinos();
         }
     }
-    std::cout << "=====================================================\n";
 }
 
 void Red::imprimirTablaEnrutador(const std::string& nombre) const {

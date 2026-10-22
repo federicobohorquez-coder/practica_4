@@ -8,8 +8,8 @@
 class Enrutador {
 private:
     std::string nombre;
-    std::map<std::string, int> vecinos;     // <NombreVecino, CostoEnlace>
-    std::map<std::string, int> tablaCostos; // <NombreDestino, CostoMinimo>
+    std::map<std::string, int> vecinos;
+    std::map<std::string, int> tablaCostos;
 
 public:
     Enrutador();
