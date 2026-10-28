@@ -146,3 +146,12 @@ int Red::calcularRutaCorta(const std::string& origen, const std::string& destino
 
     return distancias[destino];
 }
+void Red::imprimirTodasLasTablas() const {
+    if (enrutadores.empty()) {
+        std::cout << "La red esta vacia.\n";
+        return;
+    }
+    for (const auto& par : enrutadores) {
+        par.second.imprimirTabla();
+    }
+}
