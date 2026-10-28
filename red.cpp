@@ -1,5 +1,6 @@
 #include "Red.h"
 #include <iostream>
+#include <fstream>
 
 Red::Red() {}
 
@@ -68,4 +69,20 @@ void Red::imprimirTablaEnrutador(const std::string& nombre) const {
     } else {
         std::cout << "Error: El enrutador '" << nombre << "' no existe.\n";
     }
+}
+bool Red::cargarDesdeArchivo(const std::string& nombreArchivo) {
+    std::ifstream archivo(nombreArchivo);
+    if (!archivo.is_open()) return false;
+
+    std::string origen, destino;
+    int costo;
+
+    while (archivo >> origen >> destino >> costo) {
+        if (!existeEnrutador(origen)) agregarEnrutador(origen);
+        if (!existeEnrutador(destino)) agregarEnrutador(destino);
+        agregarEnlace(origen, destino, costo);
+    }
+
+    archivo.close();
+    return true;
 }

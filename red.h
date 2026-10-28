@@ -24,6 +24,7 @@ public:
     // Visualización de la topología
     void imprimirRed() const;
     void imprimirTablaEnrutador(const std::string& nombre) const;
+    bool cargarDesdeArchivo(const std::string& nombreArchivo);
 };
 
 #endif
