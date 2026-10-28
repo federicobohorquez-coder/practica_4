@@ -1,6 +1,7 @@
 #include "Red.h"
 #include <iostream>
 #include <fstream>
+#include <limits>
 
 Red::Red() {}
 
@@ -85,4 +86,63 @@ bool Red::cargarDesdeArchivo(const std::string& nombreArchivo) {
 
     archivo.close();
     return true;
+}
+int Red::calcularRutaCorta(const std::string& origen, const std::string& destino, std::list<std::string>& camino) const {
+    camino.clear();
+
+    if (!existeEnrutador(origen) || !existeEnrutador(destino)) return -1;
+    if (origen == destino) {
+        camino.push_back(origen);
+        return 0;
+    }
+
+    const int INF = std::numeric_limits<int>::max();
+    std::map<std::string, int> distancias;
+    std::map<std::string, std::string> previo;
+    std::map<std::string, bool> visitados;
+
+    for (const auto& par : enrutadores) {
+        distancias[par.first] = INF;
+        visitados[par.first] = false;
+    }
+
+    distancias[origen] = 0;
+
+    for (size_t i = 0; i < enrutadores.size(); ++i) {
+        std::string u = "";
+        int minDist = INF;
+
+        for (const auto& par : distancias) {
+            if (!visitados[par.first] && par.second < minDist) {
+                minDist = par.second;
+                u = par.first;
+            }
+        }
+
+        if (u.empty() || u == destino) break;
+        visitados[u] = true;
+
+        const auto& vecinos = enrutadores.at(u).getVecinos();
+        for (const auto& parVecino : vecinos) {
+            std::string v = parVecino.first;
+            int peso = parVecino.second;
+
+            if (!visitados[v] && distancias[u] != INF && distancias[u] + peso < distancias[v]) {
+                distancias[v] = distancias[u] + peso;
+                previo[v] = u;
+            }
+        }
+    }
+
+    if (distancias[destino] == INF) return -1;
+
+    // Reconstrucción del camino en std::list insertando al inicio O(1)
+    std::string actual = destino;
+    while (actual != origen) {
+        camino.push_front(actual);
+        actual = previo[actual];
+    }
+    camino.push_front(origen);
+
+    return distancias[destino];
 }

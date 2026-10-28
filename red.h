@@ -4,6 +4,7 @@
 #include "Enrutador.h"
 #include <map>
 #include <string>
+#include <list>
 
 class Red {
 private:
@@ -25,6 +26,7 @@ public:
     void imprimirRed() const;
     void imprimirTablaEnrutador(const std::string& nombre) const;
     bool cargarDesdeArchivo(const std::string& nombreArchivo);
+    int calcularRutaCorta(const std::string& origen, const std::string& destino, std::list<std::string>& camino) const;
 };
 
 #endif
