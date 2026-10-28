@@ -27,6 +27,7 @@ public:
     void imprimirTablaEnrutador(const std::string& nombre) const;
     bool cargarDesdeArchivo(const std::string& nombreArchivo);
     int calcularRutaCorta(const std::string& origen, const std::string& destino, std::list<std::string>& camino) const;
+    void imprimirTodasLasTablas() const;
 };
 
 #endif
